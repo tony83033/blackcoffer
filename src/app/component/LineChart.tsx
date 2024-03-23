@@ -11,7 +11,7 @@ import {
   Legend,
   BarElement,
 } from "chart.js";
-import { Chart, Bar } from "react-chartjs-2";
+import { Chart, Line } from "react-chartjs-2";
 
 type Insight = {
   end_year: string;
@@ -35,7 +35,7 @@ type Insight = {
 
 type Props = {};
 
-const BarChart = (props: Props) => {
+const LineChart = (props: Props) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -128,9 +128,9 @@ const BarChart = (props: Props) => {
 
   return (
     <div>
-      <Bar
+      <Line
         data={{
-          labels: filteredData.map((item: Insight) => item.topic),
+          labels: filteredData.map((item: Insight) => item.pestle),
           datasets: [
             {
               label: "Average Intensity",
@@ -141,14 +141,14 @@ const BarChart = (props: Props) => {
               label: "Average Relevance",
               data: filteredData.map((item: Insight) => item.relevance),
               backgroundColor: [" rgba(43,63,229,0.8)"],
-              borderRadius: 3,
+
               borderColor: "rgb(51, 51, 51)",
             },
             {
               label: "Average Likelihood",
               data: filteredData.map((item: Insight) => item.likelihood),
               backgroundColor: [" rgba(253,135,135,0.8)"],
-              borderRadius: 3,
+
               borderColor: "rgb(51, 51, 51)",
             },
           ],
@@ -158,4 +158,4 @@ const BarChart = (props: Props) => {
   );
 };
 
-export default BarChart;
+export default LineChart;

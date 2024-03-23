@@ -1,13 +1,22 @@
-gas
-oil
-consumption
-market 
-gdp 
-war
-production
-export
-battery biofuel policy
-economy
-
-robot
-strategy
+    Iran
+    Saudi Arabia
+    China
+    United States of America
+    Libya
+    Brazil
+    Russia
+    Nigeria
+    Lebanon
+    Angola
+    Egypt
+    South Africa
+    India
+    Ukraine
+    Azerbaijan
+    Mexico
+    Colombia
+    Niger
+    Mali
+    Indonesia
+    Iraq
+    South Sudan

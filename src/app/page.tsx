@@ -3,6 +3,7 @@ import LineChart from "./component/LineChart";
 import BubbleChart from "./component/BubbleChart";
 import PieChart from "./component/PieChart";
 import PolarChart from "./component/PolarChart";
+import Bar2Chart from "./component/Bar2Chart";
 type Insight = {
   _id: string;
   end_year: string;
@@ -27,7 +28,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   const response = await fetch(`${process.env.DOMAIN}/api/data`);
   const data: Insight[] = await response.json();
-  console.log(data);
+  // console.log(data);
   return (
     <div className="flex flex-col bg-gray-100 p-8">
       <div className="flex mb-6">
@@ -50,7 +51,7 @@ export default async function Home() {
           <PolarChart data={data}></PolarChart>
         </div>
         <div className="flex-1 bg-purple-300 p-4 rounded-md shadow">
-          <div className="text-white text-xs">Chart Placeholder</div>
+          <Bar2Chart data={data}></Bar2Chart>
         </div>
       </div>
       <div className="flex mb-6">

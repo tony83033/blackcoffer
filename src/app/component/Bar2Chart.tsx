@@ -11,7 +11,8 @@ import {
   Legend,
   BarElement,
 } from "chart.js";
-import { Chart, Bubble } from "react-chartjs-2";
+import { Chart, Bar } from "react-chartjs-2";
+
 type Insight = {
   _id: string;
   end_year: string;
@@ -33,14 +34,15 @@ type Insight = {
   likelihood: string;
 };
 
-type BuppleChartProps = {
+type BarChartProps = {
   data: Insight[]; // Assuming you pass data as a prop
 };
 
-const BubbleChart = ({ data }: BuppleChartProps) => {
+const Bar2Chart = ({ data }: BarChartProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
+
     PointElement,
     LineElement,
     Title,
@@ -48,7 +50,6 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
     Legend,
     BarElement,
   );
-
   const [filteredData, setFilteredData] = useState<Insight[]>([]);
 
   // Sample data (replace with actual data)
@@ -65,41 +66,55 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
     filterData();
   }, []); // Only run on initial mount
 
-  // Format data for the Bubble chart
+  // Calculate average intensity for each topic
 
   return (
     <div>
-      <Bubble
-        className="overflow-auto"
+      <Bar
         data={{
-          labels: filteredData.map((item: Insight) => item.title),
+          labels: [
+            "Iran",
+            "Saudi Arabia",
+            "China",
+            "United States of America",
+            "Libya",
+            "Brazil",
+            "Russia",
+            "Nigeria",
+            "Lebanon",
+            "Angola",
+            "Egypt",
+            "South Africa",
+            "India",
+            "Ukraine",
+            "Azerbaijan",
+            "Mexico",
+            "Colombia",
+            "Niger",
+            "Mali",
+            "Indonesia",
+            "Iraq",
+            "South Sudan",
+          ],
           datasets: [
             {
-              label: "Intensity vs Likelihood",
-              data: filteredData.map((item: Insight) => ({
-                x: item.intensity,
-                y: item.likelihood,
-                r: parseInt(item.intensity) * 2, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(255, 99, 132, 0.6)", // Adjust bubble color
+              label: "Average Intensity",
+              data: filteredData.map((item: Insight) => item.intensity),
+              backgroundColor: ["rgba(250,192,19,0.8)"],
             },
             {
-              label: "Intensity vs Relevance",
-              data: filteredData.map((item: Insight) => ({
-                x: item.intensity,
-                y: item.relevance,
-                r: parseInt(item.intensity) * 3, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(250,192,19,0.8)", // Adjust bubble color
+              label: "Average Relevance",
+              data: filteredData.map((item: Insight) => item.relevance),
+              backgroundColor: [" rgba(43,63,229,0.8)"],
+              borderRadius: 3,
+              borderColor: "rgb(51, 51, 51)",
             },
             {
-              label: "Likelihood vs Relevance",
-              data: filteredData.map((item: Insight) => ({
-                x: item.likelihood,
-                y: item.relevance,
-                r: parseInt(item.likelihood) * 1, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(253,135,135,0.8)", // Adjust bubble color
+              label: "Average Likelihood",
+              data: filteredData.map((item: Insight) => item.likelihood),
+              backgroundColor: [" rgba(253,135,135,0.8)"],
+              borderRadius: 3,
+              borderColor: "rgb(51, 51, 51)",
             },
           ],
         }}
@@ -108,4 +123,4 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
   );
 };
 
-export default BubbleChart;
+export default Bar2Chart;

@@ -1,9 +1,11 @@
+"use client"
 import BarChart from "./component/barChart";
 import LineChart from "./component/LineChart";
 import BubbleChart from "./component/BubbleChart";
 import PieChart from "./component/PieChart";
 import PolarChart from "./component/PolarChart";
 import Bar2Chart from "./component/Bar2Chart";
+import { useEffect, useState } from "react";
 type Insight = {
   _id: string;
   end_year: string;
@@ -24,13 +26,39 @@ type Insight = {
   title: string;
   likelihood: string;
 };
-export const dynamic = "force-dynamic";
+
 export default async function Home() {
-  const response = await fetch(`${process.env.DOMAIN}/api/data`);
-  const data: Insight[] = await response.json();
-  // console.log(data);
+  const [data, setData] = useState<Insight[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Added loading state
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/data`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const responseData: Insight[] = await response.json();
+      setData(responseData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error: Display an error message or retry logic
+    } finally {
+      setLoading(false); // Update loading state
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+console.log(data);
+  // JSX rendering...
   return (
     <div className="flex flex-col bg-gray-100 p-8">
+      {loading ? (
+        <div>Loading...</div> // Show loading indicator
+      ) : (
+        <>
+         <div className="flex flex-col bg-gray-100 p-8">
       <div className="flex mb-6">
         <div className="flex-1 bg-[#7b61ff] p-4 rounded-md text-white mr-4">
           <BarChart data={data} />
@@ -137,5 +165,9 @@ export default async function Home() {
         </div>
       </div>
     </div>
+        </>
+      )}
+    </div>
   );
 }
+

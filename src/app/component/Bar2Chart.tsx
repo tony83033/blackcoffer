@@ -67,7 +67,6 @@ const Bar2Chart = ({ data }: BarChartProps) => {
   }, []); // Only run on initial mount
 
   // Calculate average intensity for each topic
-  
 
   return (
     <div>

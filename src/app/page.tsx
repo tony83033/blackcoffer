@@ -23,6 +23,7 @@ type Insight = {
   title: string;
   likelihood: string;
 };
+export const dynamic = "force-dynamic";
 export default async function Home() {
   const response = await fetch(`${process.env.DOMAIN}/api/data`);
   const data: Insight[] = await response.json();

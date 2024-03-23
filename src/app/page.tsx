@@ -33,7 +33,7 @@ export default async function Home() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/data`);
+      const response = await fetch(`https://blackcoffer-gilt.vercel.app/api/data`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

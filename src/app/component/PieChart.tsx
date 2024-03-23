@@ -10,8 +10,10 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  ArcElement,
 } from "chart.js";
-import { Chart, Bubble } from "react-chartjs-2";
+import { Chart, Doughnut } from "react-chartjs-2";
+
 type Insight = {
   _id: string;
   end_year: string;
@@ -33,13 +35,14 @@ type Insight = {
   likelihood: string;
 };
 
-type BuppleChartProps = {
+type PieChartProps = {
   data: Insight[]; // Assuming you pass data as a prop
 };
 
-const BubbleChart = ({ data }: BuppleChartProps) => {
+const PieChart = ({ data }: PieChartProps) => {
   ChartJS.register(
     CategoryScale,
+    ArcElement,
     LinearScale,
     PointElement,
     LineElement,
@@ -48,7 +51,6 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
     Legend,
     BarElement,
   );
-
   const [filteredData, setFilteredData] = useState<Insight[]>([]);
 
   // Sample data (replace with actual data)
@@ -65,40 +67,44 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
     filterData();
   }, []); // Only run on initial mount
 
-  // Format data for the Bubble chart
+  // Calculate average intensity for each topic
 
   return (
     <div>
-      <Bubble
+      <Doughnut
         data={{
-          labels: filteredData.map((item: Insight) => item.title),
+          labels: [
+            "gas",
+            "oil",
+            "consumption",
+            "market",
+            "gdp",
+            "war",
+            "production",
+            "export",
+            "battery",
+            "economy",
+            "robot",
+            "strategy",
+          ],
           datasets: [
             {
-              label: "Intensity vs Likelihood",
-              data: filteredData.map((item: Insight) => ({
-                x: item.intensity,
-                y: item.likelihood,
-                r: item.intensity, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(255, 99, 132, 0.6)", // Adjust bubble color
-            },
-            {
-              label: "Intensity vs Relevance",
-              data: filteredData.map((item: Insight) => ({
-                x: item.intensity,
-                y: item.relevance,
-                r: item.intensity, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(250,192,19,0.8)", // Adjust bubble color
-            },
-            {
-              label: "Likelihood vs Relevance",
-              data: filteredData.map((item: Insight) => ({
-                x: item.likelihood,
-                y: item.relevance,
-                r: item.likelihood, // Adjust the bubble size based on intensity
-              })),
-              backgroundColor: "rgba(253,135,135,0.8)", // Adjust bubble color
+              label: "Average Intensity",
+              data: filteredData.map((item: Insight) => item.intensity),
+              backgroundColor: [
+                "rgba(250,192,19,0.8)",
+                "rgba(253,135,135,0.8)",
+                "rgba(43,120,229,0.8)",
+                "rgba(43,90,139,0.8)",
+                "rgba(21,69,132,0.8)",
+                "rgba(43,10,131,0.9)",
+                "rgba(31,35,139,0.8)",
+                "rgba(51,220,139,0.8)",
+                "rgba(14,70,139,0.7)",
+                "rgba(52,25,139,0.8)",
+                "rgba(3,10,139,0.8)",
+                "rgba(23,25,139,0.8)",
+              ],
             },
           ],
         }}
@@ -107,4 +113,4 @@ const BubbleChart = ({ data }: BuppleChartProps) => {
   );
 };
 
-export default BubbleChart;
+export default PieChart;

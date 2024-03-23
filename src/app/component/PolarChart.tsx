@@ -10,8 +10,10 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  ArcElement,
+  RadialLinearScale,
 } from "chart.js";
-import { Chart, Bar } from "react-chartjs-2";
+import { Chart, PolarArea } from "react-chartjs-2";
 
 type Insight = {
   _id: string;
@@ -34,15 +36,15 @@ type Insight = {
   likelihood: string;
 };
 
-type BarChartProps = {
+type PolarChartProps = {
   data: Insight[]; // Assuming you pass data as a prop
 };
 
-const BarChart = ({ data }: BarChartProps) => {
+const PolarChart = ({ data }: PolarChartProps) => {
   ChartJS.register(
-    CategoryScale,
+    RadialLinearScale,
+    ArcElement,
     LinearScale,
-
     PointElement,
     LineElement,
     Title,
@@ -70,28 +72,31 @@ const BarChart = ({ data }: BarChartProps) => {
 
   return (
     <div>
-      <Bar
+      <PolarArea
         data={{
-          labels: filteredData.map((item: Insight) => item.topic),
+          labels: [
+            "gas",
+            "oil",
+            "consumption",
+            "market",
+            "gdp",
+            "war",
+            "production",
+            "export",
+            "battery",
+            "economy",
+            "robot",
+            "strategy",
+          ],
           datasets: [
             {
               label: "Average Intensity",
               data: filteredData.map((item: Insight) => item.intensity),
-              backgroundColor: ["rgba(250,192,19,0.8)"],
-            },
-            {
-              label: "Average Relevance",
-              data: filteredData.map((item: Insight) => item.relevance),
-              backgroundColor: [" rgba(43,63,229,0.8)"],
-              borderRadius: 3,
-              borderColor: "rgb(51, 51, 51)",
-            },
-            {
-              label: "Average Likelihood",
-              data: filteredData.map((item: Insight) => item.likelihood),
-              backgroundColor: [" rgba(253,135,135,0.8)"],
-              borderRadius: 3,
-              borderColor: "rgb(51, 51, 51)",
+              backgroundColor: [
+                "rgba(250,192,19,0.8)",
+                "rgba(253,135,135,0.8)",
+                "rgba(43,63,229,0.8)",
+              ],
             },
           ],
         }}
@@ -100,4 +105,4 @@ const BarChart = ({ data }: BarChartProps) => {
   );
 };
 
-export default BarChart;
+export default PolarChart;

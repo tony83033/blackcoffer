@@ -1,0 +1,13 @@
+gas
+oil
+consumption
+market 
+gdp 
+war
+production
+export
+battery biofuel policy
+economy
+
+robot
+strategy

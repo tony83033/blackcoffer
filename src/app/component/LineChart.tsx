@@ -14,8 +14,9 @@ import {
 import { Chart, Line } from "react-chartjs-2";
 
 type Insight = {
+  _id: string;
   end_year: string;
-  intensity: number;
+  intensity: string;
   sector: string;
   topic: string;
   insight: string;
@@ -26,16 +27,20 @@ type Insight = {
   added: string;
   published: string;
   country: string;
-  relevance: number;
+  relevance: string;
   pestle: string;
   source: string;
   title: string;
-  likelihood: number;
+  likelihood: string;
+};
+
+type LineChartProps = {
+  data: Insight[]; // Assuming you pass data as a prop
 };
 
 type Props = {};
 
-const LineChart = (props: Props) => {
+const LineChart = ({ data }: LineChartProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -47,70 +52,6 @@ const LineChart = (props: Props) => {
     BarElement,
   );
   const [filteredData, setFilteredData] = useState<Insight[]>([]);
-
-  // Sample data (replace with actual data)
-  const data: Insight[] = [
-    {
-      end_year: "",
-      intensity: 6,
-      sector: "Energy",
-      topic: "gas",
-      insight: "Annual Energy Outlook",
-      url: "http://www.eia.gov/outlooks/aeo/pdf/0383(2017).pdf",
-      region: "Northern America",
-      start_year: "",
-      impact: "",
-      added: "January, 20 2017 03:51:25",
-      published: "January, 09 2017 00:00:00",
-      country: "United States of America",
-      relevance: 2,
-      pestle: "Industries",
-      source: "EIA",
-      title:
-        "U.S. natural gas consumption is expected to increase during much of the projection period.",
-      likelihood: 3,
-    },
-    {
-      end_year: "",
-      intensity: 6,
-      sector: "Energy",
-      topic: "oil",
-      insight: "Annual Energy Outlook",
-      url: "http://www.eia.gov/outlooks/aeo/pdf/0383(2017).pdf",
-      region: "Northern America",
-      start_year: "",
-      impact: "",
-      added: "January, 20 2017 03:51:24",
-      published: "January, 09 2017 00:00:00",
-      country: "United States of America",
-      relevance: 2,
-      pestle: "Industries",
-      source: "EIA",
-      title:
-        "Reference case U.S. crude oil production is projected to recover from recent declines.",
-      likelihood: 3,
-    },
-    {
-      end_year: "",
-      intensity: 6,
-      sector: "Energy",
-      topic: "consumption",
-      insight: "Annual Energy Outlook",
-      url: "http://www.eia.gov/outlooks/aeo/pdf/0383(2017).pdf",
-      region: "Northern America",
-      start_year: "",
-      impact: "",
-      added: "January, 20 2017 03:51:23",
-      published: "January, 09 2017 00:00:00",
-      country: "United States of America",
-      relevance: 2,
-      pestle: "Industries",
-      source: "EIA",
-      title:
-        "U.S. petroleum consumption is projected to remain below the 2005 level.",
-      likelihood: 3,
-    },
-  ];
 
   // Function to filter data based on selected criteria
   const filterData = () => {

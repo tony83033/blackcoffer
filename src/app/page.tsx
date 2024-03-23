@@ -1,45 +1,52 @@
 import BarChart from "./component/barChart";
 import LineChart from "./component/LineChart";
-
-export default function Home() {
+import BubbleChart from "./component/BubbleChart";
+import PieChart from "./component/PieChart";
+import PolarChart from "./component/PolarChart";
+type Insight = {
+  _id: string;
+  end_year: string;
+  intensity: string;
+  sector: string;
+  topic: string;
+  insight: string;
+  url: string;
+  region: string;
+  start_year: string;
+  impact: string;
+  added: string;
+  published: string;
+  country: string;
+  relevance: string;
+  pestle: string;
+  source: string;
+  title: string;
+  likelihood: string;
+};
+export default async function Home() {
+  const response = await fetch(`${process.env.DOMAIN}/api/data`);
+  const data: Insight[] = await response.json();
+  console.log(data);
   return (
     <div className="flex flex-col bg-gray-100 p-8">
       <div className="flex mb-6">
         <div className="flex-1 bg-[#7b61ff] p-4 rounded-md text-white mr-4">
-          <BarChart></BarChart>
+          <BarChart data={data} />
         </div>
 
         <div className="flex-1 bg-white p-4 rounded-md shadow mr-4">
-          <LineChart></LineChart>
+          <LineChart data={data}></LineChart>
         </div>
         <div className="flex-1 bg-white p-4 rounded-md shadow">
-          <div className="text-xs">Sales Overview</div>
-          <div className="text-xl font-bold mt-2">$42.6k</div>
-          <div className="flex justify-between mt-4">
-            <div>
-              <div className="text-xs">Order</div>
-              <div className="text-lg">6225</div>
-            </div>
-            <div>
-              <div className="text-xs">Visits</div>
-              <div className="text-lg">25.5%</div>
-            </div>
-          </div>
+          <BubbleChart data={data}></BubbleChart>
         </div>
       </div>
       <div className="flex mb-6">
         <div className="flex-1 bg-white p-4 rounded-md shadow mr-4">
-          <div className="text-xs">Earnings</div>
-          <div className="text-4xl font-bold mt-4">$545.09</div>
-          <div className="text-xs mt-2">Profit</div>
-          <div className="text-lg mt-2">$205.34</div>
+          <PieChart data={data}></PieChart>
         </div>
         <div className="flex-1 bg-white p-4 rounded-md shadow mr-4">
-          <div className="text-xs">Support Tracker</div>
-          <div className="text-4xl font-bold mt-4">164</div>
-          <div className="text-xs mt-2">Total Tickets</div>
-          <div className="text-lg mt-2">Open Tickets</div>
-          <div className="text-lg mt-2">Response Time</div>
+          <PolarChart data={data}></PolarChart>
         </div>
         <div className="flex-1 bg-purple-300 p-4 rounded-md shadow">
           <div className="text-white text-xs">Chart Placeholder</div>
